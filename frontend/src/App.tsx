@@ -104,7 +104,7 @@ export default function App() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-100">
+        <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-emerald-100 flex flex-col">
 
             {/* Navigation */}
             <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200">
@@ -162,38 +162,41 @@ export default function App() {
                 </div>
             </nav>
 
-            {viewMode === 'customer' ? (
-                <>
-                    {/* Hero Section */}
-                    <header className="bg-white border-b border-slate-200">
-                        <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
-                            <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-                                Amphibious Companions for <span className="text-emerald-600">Every Occasion</span>
-                            </h1>
-                            <p className="max-w-xl mx-auto text-lg text-slate-500 mb-8">
-                                Ethically sourced rubber frogs. 100% waterproof. 100% charming.
-                                Now accepting crypto payments via Mural.
-                            </p>
-                        </div>
-                    </header>
+            {/* Main Content - flex-grow pushes footer to bottom */}
+            <div className="flex-grow">
+                {viewMode === 'customer' ? (
+                    <>
+                        {/* Hero Section */}
+                        <header className="bg-white border-b border-slate-200">
+                            <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
+                                <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                                    Amphibious Companions for <span className="text-emerald-600">Every Occasion</span>
+                                </h1>
+                                <p className="max-w-xl mx-auto text-lg text-slate-500 mb-8">
+                                    Ethically sourced rubber frogs. 100% waterproof. 100% charming.
+                                    Now accepting crypto payments via Mural.
+                                </p>
+                            </div>
+                        </header>
 
-                    {/* Product Grid */}
-                    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {PRODUCTS.map(product => (
-                                <ProductCard
-                                    key={product.id}
-                                    product={product}
-                                    onAddToCart={addToCart}
-                                    onImageClick={(product) => setSelectedImage(product)}
-                                />
-                            ))}
-                        </div>
-                    </main>
-                </>
-            ) : (
-                <MerchantDashboard />
-            )}
+                        {/* Product Grid */}
+                        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {PRODUCTS.map(product => (
+                                    <ProductCard
+                                        key={product.id}
+                                        product={product}
+                                        onAddToCart={addToCart}
+                                        onImageClick={(product) => setSelectedImage(product)}
+                                    />
+                                ))}
+                            </div>
+                        </main>
+                    </>
+                ) : (
+                    <MerchantDashboard />
+                )}
+            </div>
 
             {/* Footer */}
             <footer className="bg-slate-900 text-slate-400 py-12">
