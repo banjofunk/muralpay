@@ -1,0 +1,28 @@
+{
+  "name": "frogstop-backend",
+  "version": "1.0.0",
+  "description": "Serverless backend for FrogStop e-commerce",
+  "main": "handlers/checkout.js",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "local": "serverless offline"
+  },
+  "keywords": [
+    "serverless",
+    "lambda",
+    "aws"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^9.0.1",
+    "@aws-sdk/client-dynamodb": "^3.968.0",
+    "@aws-sdk/lib-dynamodb": "^3.968.0"
+  },
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-offline": "^13.3.3"
+  }
+}

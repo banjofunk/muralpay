@@ -1,0 +1,87 @@
+service: frogstop-backend
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: dev
+  environment:
+    MURAL_PAY_API_KEY: ${env:MURAL_PAY_API_KEY, 'mock_sandbox_key'}
+    MURAL_PAY_ACCOUNT_ID: ${env:MURAL_PAY_ACCOUNT_ID, 'acc_sandbox_123'}
+    MURAL_PAY_ENV: ${env:MURAL_PAY_ENV, 'sandbox'}
+    PAYMENTS_TABLE: ${self:custom.paymentsTableName}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - Fn::GetAtt: [PaymentsTable, Arn]
+
+  httpApi:
+    cors: true
+
+functions:
+  checkout:
+    handler: handlers/checkout.handler
+    events:
+      - httpApi:
+          path: /checkout
+          method: post
+
+  checkStatus:
+    handler: handlers/checkStatus.handler
+    events:
+      - httpApi:
+          path: /checkout/status/{id}
+          method: get
+
+  webhook:
+    handler: handlers/webhook.handler
+    events:
+      - httpApi:
+          path: /webhook/muralpay
+          method: post
+
+  listPayments:
+    handler: handlers/listPayments.handler
+    events:
+      - httpApi:
+          path: /payments
+          method: get
+
+resources:
+  Resources:
+    PaymentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.paymentsTableName}
+        AttributeDefinitions:
+          - AttributeName: paymentId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: paymentId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+custom:
+  paymentsTableName: ${self:service}-payments-${sls:stage}
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-dynamodb-local

@@ -1,0 +1,9 @@
+# Serverless
+.serverless
+.dynamodb
+
+# Dependency Directories
+node_modules/
+
+# Environment Variables
+.env

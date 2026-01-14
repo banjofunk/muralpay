@@ -1,0 +1,37 @@
+# System Files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+.npm/
+
+# Environment Variables
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Build Outputs
+dist/
+build/
+.output/
+
+# IDEs
+.vscode/
+.idea/
+
+# Backend Specific
+.serverless/
+.dynamodb/
+
+# Frontend Specific
+.amplify/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
