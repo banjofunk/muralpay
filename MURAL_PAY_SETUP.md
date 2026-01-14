@@ -58,7 +58,7 @@ MURAL_PAY_WEBHOOK_SECRET=your_webhook_secret_here
 
 Install ngrok to expose your local backend:
 
-``bash
+```bash
 npm install -g ngrok
 ngrok http 3001
 ```
